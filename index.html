@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pedido de Namoro</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #1a1a1a;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"><path fill="#ff0080" d="M15 0C7.015 0 0 7.015 0 15s7.015 15 15 15 15-7.015 15-15S22.985 0 15 0zm-3.5 16.25c-1.15 0-2.125-.675-2.125-2.125 0-1.15.675-2.125 2.125-2.125 1.15 0 2.125.675 2.125 2.125 0 1.15-.675 2.125-2.125 2.125zm3.5-9c-1.15 0-2.125-.675-2.125-2.125 0-1.15.675-2.125 2.125-2.125 1.15 0 2.125.675 2.125 2.125 0 1.15-.675 2.125-2.125 2.125z"/></svg>'), auto;
+      background-size: cover;
+      animation: fundo-animacao 10s linear infinite;
+    }
+
+    @keyframes fundo-animacao {
+      0% {
+        background-position: 0% 0%;
+      }
+      100% {
+        background-position: 100% 100%;
+      }
+    }
+
+    h1 {
+      color: #ff0080;
+      margin-top: 100px;
+      font-size: 36px;
+    }
+
+    .pedido {
+      margin-bottom: 50px;
+    }
+
+    .botoes {
+      display: flex;
+      justify-content: center;
+      margin-top: 50px;
+    }
+
+    .botao {
+      display: inline-block;
+      padding: 10px 20px;
+      font-size: 20px;
+      background-color: #ff0080;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      margin: 0 10px;
+      transition: transform 0.3s;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .botao:hover {
+      transform: scale(1.1);
+    }
+
+    .animacao {
+      display: none;
+      margin-top: 50px;
+      font-size: 24px;
+      color: #ff0080;
+      animation: pulsar 2s infinite;
+    }
+
+    @keyframes pulsar {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.2);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    .coracao {
+      position: absolute;
+      font-size: 30px;
+      color: #ff0080;
+      animation: explodir 1.5s ease-out forwards;
+      pointer-events: none;
+    }
+
+    @keyframes explodir {
+      0% {
+        opacity: 1;
+        transform: scale(0);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1.5);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(2);
+      }
+    }
+
+
+    .imagem-canto {
+      position: absolute;
+      width: 200px;
+      height: auto;
+      display: none;
+      animation: pulsar 2s infinite;
+    }
+
+    #imagem-canto-superior-esquerdo {
+      top: 10px;
+      left: 10px;
+    }
+
+    #imagem-canto-superior-direito {
+      top: 10px;
+      right: 10px;
+    }
+
+    #imagem-canto-inferior-esquerdo {
+      bottom: 10px;
+      left: 10px;
+    }
+
+    #imagem-canto-inferior-direito {
+      bottom: 10px;
+      right: 10px;
+    }
+
+    #imagem-canto-inferior-esquerdo2 {
+      bottom: 90px;
+      left: 300px;
+    }
+
+    #imagem-canto-inferior-direito2 {
+      bottom: 120px;
+      right: 300px;
+    }
+  </style>
+</head>
+<body>
+  <div class="pedido">
+    <h1>Quer namorar comigo?</h1>
+  </div>
+  <div class="botoes">
+    <button id="sim" class="botao">Sim</button>
+    <button id="nao" class="botao">Não</button>
+  </div>
+  <div id="animacao" class="animacao">
+    Parabéns! Você aceitou o pedido de namoro. 🎉
+  </div>
+
+  <!-- Imagens nos cantos da tela -->
+  <img id="imagem-canto-superior-esquerdo" class="imagem-canto" src="acai.png" alt="Imagem Superior Esquerdo">
+  <img id="imagem-canto-superior-direito" class="imagem-canto" src="draculaura.png" alt="Imagem Superior Direito">
+  <img id="imagem-canto-inferior-esquerdo" class="imagem-canto" src="pucca.png" alt="Imagem Inferior Esquerdo">
+  <img id="imagem-canto-inferior-direito" class="imagem-canto" src="taylor swfit.png" alt="Imagem Inferior Direito">
+  <img id="imagem-canto-inferior-esquerdo2" class="imagem-canto" src="bts.png" alt="Imagem Inferior Esquerdo">
+  <img id="imagem-canto-inferior-direito2" class="imagem-canto" src="taylor swift.png" alt="Imagem Inferior Direito">
+
+  <script>
+    const simButton = document.getElementById('sim');
+    const naoButton = document.getElementById('nao');
+    const animacaoDiv = document.getElementById('animacao');
+    const imagensCanto = document.querySelectorAll('.imagem-canto');
+
+    // Função para mover o botão "Não" aleatoriamente
+    function moverBotaoNao() {
+      event.preventDefault();
+      const maxX = window.innerWidth - naoButton.offsetWidth;
+      const maxY = window.innerHeight - naoButton.offsetHeight;
+      const newX = Math.floor(Math.random() * maxX);
+      const newY = Math.floor(Math.random() * maxY);
+
+      naoButton.style.left = `${newX}px`;
+      naoButton.style.top = `${newY}px`;
+    }
+
+    // Função para criar corações saindo das imagens
+    function criarCoracoesDasImagens() {
+      imagensCanto.forEach(imagem => {
+        const intervalo = setInterval(() => {
+          const coracao = document.createElement('div');
+          coracao.classList.add('coracao');
+          coracao.textContent = '❤️';
+
+          // Posiciona o coração na mesma posição da imagem
+          const rect = imagem.getBoundingClientRect();
+          const x = rect.left + rect.width / 2;
+          const y = rect.top + rect.height / 2;
+
+          coracao.style.left = `${x}px`;
+          coracao.style.top = `${y}px`;
+          document.body.appendChild(coracao);
+
+          // Remove o coração após a animação
+          setTimeout(() => {
+            coracao.remove();
+          }, 1500);
+        }, 500); // Intervalo de 500ms entre cada coração
+      });
+    }
+
+    // Evento de clique no botão "Sim"
+    simButton.addEventListener('click', () => {
+      simButton.style.display = 'none';
+      naoButton.style.display = 'none';
+      animacaoDiv.style.display = 'block';
+
+      // Mostra as imagens nos cantos da tela
+      imagensCanto.forEach(imagem => {
+        imagem.style.display = 'block';
+      });
+
+      // Inicia a criação de corações saindo das imagens
+      criarCoracoesDasImagens();
+    });
+
+    // Move o botão "Não" ao passar o cursor próximo
+    document.addEventListener('mousemove', (e) => {
+      const naoButtonRect = naoButton.getBoundingClientRect();
+      const mouseX = e.clientX;
+      const mouseY = e.clientY;
+
+      const distance = Math.sqrt(
+        Math.pow(mouseX - (naoButtonRect.left + naoButtonRect.width / 2), 2) +
+        Math.pow(mouseY - (naoButtonRect.top + naoButtonRect.height / 2), 2)
+      );
+
+      if (distance < 100) {
+        moverBotaoNao();
+      }
+    });
+
+    // Cria corações ao clicar ou tocar na tela
+    document.addEventListener('click', (e) => {
+      const coracao = document.createElement('div');
+      coracao.classList.add('coracao');
+      coracao.textContent = '❤️';
+      coracao.style.left = `${e.clientX}px`;
+      coracao.style.top = `${e.clientY}px`;
+      document.body.appendChild(coracao);
+
+      setTimeout(() => {
+        coracao.remove();
+      }, 1500);
+    });
+
+    document.addEventListener('touchstart', (e) => {
+      const touch = e.touches[0];
+      const coracao = document.createElement('div');
+      coracao.classList.add('coracao');
+      coracao.textContent = '❤️';
+      coracao.style.left = `${touch.clientX}px`;
+      coracao.style.top = `${touch.clientY}px`;
+      document.body.appendChild(coracao);
+
+      setTimeout(() => {
+        coracao.remove();
+      }, 1500);
+    });
+  </script>
+</body>
+</html>
