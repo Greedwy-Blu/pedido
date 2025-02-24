@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,29 +29,30 @@
 
     h1 {
       color: #ff0080;
-      margin-top: 100px;
-      font-size: 36px;
+      margin-top: 10vh;
+      font-size: 5vw;
     }
 
     .pedido {
-      margin-bottom: 50px;
+      margin-bottom: 5vh;
     }
 
     .botoes {
       display: flex;
       justify-content: center;
-      margin-top: 50px;
+      margin-top: 5vh;
+      flex-wrap: wrap;
     }
 
     .botao {
       display: inline-block;
-      padding: 10px 20px;
-      font-size: 20px;
+      padding: 2vh 4vw;
+      font-size: 4vw;
       background-color: #ff0080;
       color: #fff;
       border: none;
       cursor: pointer;
-      margin: 0 10px;
+      margin: 1vh 2vw;
       transition: transform 0.3s;
       border-radius: 5px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
@@ -63,8 +64,8 @@
 
     .animacao {
       display: none;
-      margin-top: 50px;
-      font-size: 24px;
+      margin-top: 5vh;
+      font-size: 4vw;
       color: #ff0080;
       animation: pulsar 2s infinite;
     }
@@ -83,10 +84,23 @@
 
     .coracao {
       position: absolute;
-      font-size: 30px;
+      font-size: 5vw;
       color: #ff0080;
-      animation: explodir 1.5s ease-out forwards;
+      animation: explodir 0.5s ease-out forwards;
       pointer-events: none;
+    }
+
+    .coracao.vermelho {
+      color: red;
+      animation: explodir-vermelho 1s ease-out forwards;
+    }
+    .coracao.azul {
+      color: blue;
+      animation: explodir-azul 2s ease-out forwards;
+    }
+    .coracao.verde {
+      color: green;
+      animation: explodir-verde 1.5s ease-out forwards;
     }
 
     @keyframes explodir {
@@ -94,9 +108,16 @@
         opacity: 1;
         transform: scale(0);
       }
-      50% {
-        opacity: 1;
+      100% {
+        opacity: 0;
         transform: scale(1.5);
+      }
+    }
+
+    @keyframes explodir-vermelho {
+      0% {
+        opacity: 1;
+        transform: scale(0);
       }
       100% {
         opacity: 0;
@@ -104,43 +125,112 @@
       }
     }
 
+    @keyframes explodir-azul {
+      0% {
+        opacity: 1;
+        transform: scale(0);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(1.2);
+      }
+    }
+
+    @keyframes explodir-verde {
+      0% {
+        opacity: 1;
+        transform: scale(0);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(1.8);
+      }
+    }
+
+    #nao {
+      position: absolute;
+      transition: transform 0.2s, background-color 0.2s;
+    }
+
+    #nao:hover {
+      transform: scale(1.2);
+      background-color: #f00;
+    }
 
     .imagem-canto {
       position: absolute;
-      width: 200px;
+      width: 15vw;
       height: auto;
       display: none;
       animation: pulsar 2s infinite;
     }
 
     #imagem-canto-superior-esquerdo {
-      top: 10px;
-      left: 10px;
+      top: 2vh;
+      left: 2vw;
     }
 
     #imagem-canto-superior-direito {
-      top: 10px;
-      right: 10px;
+      top: 2vh;
+      right: 2vw;
     }
 
     #imagem-canto-inferior-esquerdo {
-      bottom: 10px;
-      left: 10px;
+      bottom: 2vh;
+      left: 2vw;
     }
 
     #imagem-canto-inferior-direito {
-      bottom: 10px;
-      right: 10px;
+      bottom: 2vh;
+      right: 2vw;
     }
 
     #imagem-canto-inferior-esquerdo2 {
-      bottom: 90px;
-      left: 300px;
+      bottom: 10vh;
+      left: 20vw;
     }
 
     #imagem-canto-inferior-direito2 {
-      bottom: 120px;
-      right: 300px;
+      bottom: 12vh;
+      right: 20vw;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 8vw;
+      }
+
+      .botao {
+        font-size: 6vw;
+        padding: 3vh 6vw;
+      }
+
+      .animacao {
+        font-size: 6vw;
+      }
+
+      .imagem-canto {
+        width: 20vw;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 10vw;
+      }
+
+      .botao {
+        font-size: 8vw;
+        padding: 4vh 8vw;
+      }
+
+      .animacao {
+        font-size: 8vw;
+      }
+
+      .imagem-canto {
+        width: 25vw;
+      }
     }
   </style>
 </head>
@@ -170,9 +260,7 @@
     const animacaoDiv = document.getElementById('animacao');
     const imagensCanto = document.querySelectorAll('.imagem-canto');
 
-    // Função para mover o botão "Não" aleatoriamente
     function moverBotaoNao() {
-      event.preventDefault();
       const maxX = window.innerWidth - naoButton.offsetWidth;
       const maxY = window.innerHeight - naoButton.offsetHeight;
       const newX = Math.floor(Math.random() * maxX);
@@ -182,7 +270,6 @@
       naoButton.style.top = `${newY}px`;
     }
 
-    // Função para criar corações saindo das imagens
     function criarCoracoesDasImagens() {
       imagensCanto.forEach(imagem => {
         const intervalo = setInterval(() => {
@@ -190,7 +277,6 @@
           coracao.classList.add('coracao');
           coracao.textContent = '❤️';
 
-          // Posiciona o coração na mesma posição da imagem
           const rect = imagem.getBoundingClientRect();
           const x = rect.left + rect.width / 2;
           const y = rect.top + rect.height / 2;
@@ -199,30 +285,53 @@
           coracao.style.top = `${y}px`;
           document.body.appendChild(coracao);
 
-          // Remove o coração após a animação
           setTimeout(() => {
             coracao.remove();
           }, 1500);
-        }, 500); // Intervalo de 500ms entre cada coração
+        }, 500);
       });
     }
 
-    // Evento de clique no botão "Sim"
+    function criarCoracao(x, y) {
+      const coracao = document.createElement('div');
+      coracao.classList.add('coracao');
+
+      const cores = ['vermelho', 'azul', 'verde'];
+      const corAleatoria = cores[Math.floor(Math.random() * cores.length)];
+      coracao.classList.add(corAleatoria);
+
+      const emojis = ['❤️', '🩷', '🧡', '💛', '💚', '💙', '🩵', '💜', '🤎', '🖤', '🩶', '🤍', '❣️', '💕', '💞', '💓', '💗', '💖', '💘', '💝', '💟', '❤️‍🔥', '❤️‍🩹', '🫶', '♥️', '💌'];
+      const emojiAleatorio = emojis[Math.floor(Math.random() * emojis.length)];
+      coracao.textContent = emojiAleatorio;
+
+      coracao.style.left = `${x}px`;
+      coracao.style.top = `${y}px`;
+
+      document.body.appendChild(coracao);
+
+      setTimeout(() => {
+        coracao.remove();
+      }, 1500);
+    }
+
+    document.body.style.backgroundImage = "url('https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.shutterstock.com%2Fsearch%2Fheart%2Bbackground&psig=AOvVaw2o0bQ1r99W_zZ8jI_N2O8d&ust=1700525176907000&source=images&cd=vfe&ved=0CA8QjRxqFwoTCNjk99G16_4CFQAAAAAdAAAAABAD')";
+
+    let timer = setTimeout(() => {
+      // alert("Você está demorando muito para responder! 😅");
+    }, 15000);
+
     simButton.addEventListener('click', () => {
       simButton.style.display = 'none';
       naoButton.style.display = 'none';
       animacaoDiv.style.display = 'block';
-
-      // Mostra as imagens nos cantos da tela
       imagensCanto.forEach(imagem => {
         imagem.style.display = 'block';
       });
 
-      // Inicia a criação de corações saindo das imagens
       criarCoracoesDasImagens();
+      clearTimeout(timer);
     });
 
-    // Move o botão "Não" ao passar o cursor próximo
     document.addEventListener('mousemove', (e) => {
       const naoButtonRect = naoButton.getBoundingClientRect();
       const mouseX = e.clientX;
@@ -238,32 +347,16 @@
       }
     });
 
-    // Cria corações ao clicar ou tocar na tela
-    document.addEventListener('click', (e) => {
-      const coracao = document.createElement('div');
-      coracao.classList.add('coracao');
-      coracao.textContent = '❤️';
-      coracao.style.left = `${e.clientX}px`;
-      coracao.style.top = `${e.clientY}px`;
-      document.body.appendChild(coracao);
+    naoButton.style.left = `${simButton.offsetLeft + simButton.offsetWidth + 10}px`;
+    naoButton.style.top = `${simButton.offsetTop}px`;
 
-      setTimeout(() => {
-        coracao.remove();
-      }, 1500);
+    document.addEventListener('click', (e) => {
+      criarCoracao(e.clientX, e.clientY);
     });
 
     document.addEventListener('touchstart', (e) => {
       const touch = e.touches[0];
-      const coracao = document.createElement('div');
-      coracao.classList.add('coracao');
-      coracao.textContent = '❤️';
-      coracao.style.left = `${touch.clientX}px`;
-      coracao.style.top = `${touch.clientY}px`;
-      document.body.appendChild(coracao);
-
-      setTimeout(() => {
-        coracao.remove();
-      }, 1500);
+      criarCoracao(touch.clientX, touch.clientY);
     });
   </script>
 </body>
